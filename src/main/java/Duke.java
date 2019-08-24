@@ -12,7 +12,7 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    private static void store(Task a) {
+    private static void storeTask(Task a) {
         list.add(a);
         if (list.size() == 1) {
             System.out.println("Got it. I've added this task:\n"
@@ -48,34 +48,52 @@ public class Duke {
         greet();
         Scanner obj = new Scanner(System.in);
         String input;
-        while (!(input = obj.nextLine()).equals("bye")) {
-            if (input.equals("list")) {
-                echo();
-            } else if (input.isEmpty()) {
-                System.out.println("You did not enter a task, what can I do for you?");
-            } else {
-                String[] words = input.split(" ", 2);
-                if (words[0].equals("done") || words[0].equals("Done")) {
-                    int check = Integer.parseInt(words[1]) - 1;
-                    taskComplete(check);
-                } else if (words[0].equals("remove") || words[0].equals("Remove")) {
-                    int check = Integer.parseInt(words[1]) - 1;
-                    removeTask(check);
-                } else if (words[0].equals("todo")) {
-                    Task task = new Todo(words[1]);
-                    store(task);
-                } else if (words[0].equals("deadline")) {
-                    String[] splitter = words[1].split("/by");
-                    Task task = new Deadline(splitter[0].trim(), splitter[1].trim());
-                    store(task);
-                } else if (words[0].equals("event")) {
-                    String[] splitter = words[1].split("/at");
-                    Task task = new Event(splitter[0].trim(), splitter[1].trim());
-                    store(task);
+        while (true) {
+            try {
+                input = obj.nextLine();
+                if (input.equals("bye")) {
+                    exit();
+                    break;
+                } else if (input.equals("list")) {
+                    echo();
+                } else if (input.isEmpty()) {
+                    throw new DukeException("\u2639 OOPS!!! You did not enter anything.");
+                } else {
+                    String[] words = input.split(" ", 2);
+                    if (words[0].equals("done") || words[0].equals("Done")) {
+                        int check = Integer.parseInt(words[1]) - 1;
+                        taskComplete(check);
+                    } else if (words[0].equals("remove") || words[0].equals("Remove")) {
+                        int check = Integer.parseInt(words[1]) - 1;
+                        removeTask(check);
+                    } else if (words[0].equals("todo")) {
+                        if (words.length == 1) {
+                            throw new DukeException("\u2639 OOPS!!! The description of a todo cannot be empty.");
+                        }
+                        Task task = new Todo(words[1]);
+                        storeTask(task);
+                    } else if (words[0].equals("deadline")) {
+                        if (words.length == 1) {
+                            throw new DukeException("\u2639 OOPS!!! The description of a deadline cannot be empty.");
+                        }
+                        String[] splitter = words[1].split("/by");
+                        Task task = new Deadline(splitter[0].trim(), splitter[1].trim());
+                        storeTask(task);
+                    } else if (words[0].equals("event")) {
+                        if (words.length == 1) {
+                            throw new DukeException("\u2639 OOPS!!! The description of a deadline cannot be empty.");
+                        }
+                        String[] splitter = words[1].split("/at");
+                        Task task = new Event(splitter[0].trim(), splitter[1].trim());
+                        storeTask(task);
+                    } else {
+                        throw new DukeException("\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    }
                 }
+            } catch (DukeException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println("Please enter a task.");
             }
         }
-        exit();
     }
-
 }
