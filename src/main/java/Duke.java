@@ -1,8 +1,10 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
     private static ArrayList<Task> list = new ArrayList<>();
+    private static final String FILENAME = "C:\\Users\\user\\Desktop\\duke\\data\\tasks.txt";
 
     private static void greet() {
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
@@ -14,6 +16,7 @@ public class Duke {
 
     private static void storeTask(Task a) {
         list.add(a);
+        writeFile(FILENAME);
         if (list.size() == 1) {
             System.out.println("Got it. I've added this task:\n"
                     + "   " + a.toString()
@@ -34,6 +37,7 @@ public class Duke {
 
     private static void taskComplete(int i) {
         list.get(i).markAsDone();
+        writeFile(FILENAME);
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(list.get(i).toString());
     }
@@ -42,12 +46,75 @@ public class Duke {
         System.out.println("Okay! I've removed this task:");
         System.out.println(list.get(i).toString());
         list.remove(i);
+        writeFile(FILENAME);
+    }
+
+    private static void writeFile(String name) {
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(name));
+            for (int i = 0; i < list.size(); i++) {
+                bufferedWriter.write(list.get(i) + "\n");
+            }
+            bufferedWriter.close();
+        } catch (IOException e){
+            System.out.println("There's no file");
+            e.printStackTrace();
+        }
+    }
+
+    private static void readFile(String name) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(name));
+            String input = bufferedReader.readLine();
+            int count = 0;
+            String status;
+            while (input != null) {
+                status = input.substring(3, 6);
+                if (input.startsWith("[T]")) {
+                    input = input.substring(7).trim();
+                    Task task = new Todo(input);
+                    list.add(task);
+                    if (status.equals("[\u2713]")) {
+                        list.get(count).markAsDone();
+                    }
+                    count += 1;
+                } else if (input.startsWith("[D]")) {
+                    input = input.substring(7);
+                    String[] splitter = input.split("\\(by:",2);
+                    String remove_bracket = splitter[1].substring(0, splitter[1].length()-1);
+                    Task task = new Deadline(splitter[0].trim(), remove_bracket.trim());
+                    list.add(task);
+                    if (status.equals("[\u2713]")) {
+                        list.get(count).markAsDone();
+                    }
+                    count += 1;
+                } else if (input.startsWith("[E]")) {
+                    input = input.substring(7);
+                    String[] splitter = input.split("\\(at:", 2);
+                    String remove_bracket = splitter[1].substring(0, splitter[1].length()-1);
+                    Task task = new Event(splitter[0].trim(), remove_bracket.trim());
+                    list.add(task);
+                    if (status.equals("[\u2713]")) {
+                        list.get(count).markAsDone();
+                    }
+                    count += 1;
+                }
+                input = bufferedReader.readLine();
+            }
+            bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File does not exist");
+        } catch (IOException e) {
+            System.out.println("There's no file");
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
         greet();
         Scanner obj = new Scanner(System.in);
         String input;
+        readFile(FILENAME);
         while (true) {
             try {
                 input = obj.nextLine();
