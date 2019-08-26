@@ -60,34 +60,50 @@ public class Duke {
                     throw new DukeException("\u2639 OOPS!!! You did not enter anything.");
                 } else {
                     String[] words = input.split(" ", 2);
-                    if (words[0].equals("done") || words[0].equals("Done")) {
-                        int check = Integer.parseInt(words[1]) - 1;
-                        taskComplete(check);
-                    } else if (words[0].equals("remove") || words[0].equals("Remove")) {
-                        int check = Integer.parseInt(words[1]) - 1;
-                        removeTask(check);
-                    } else if (words[0].equals("todo")) {
-                        if (words.length == 1) {
-                            throw new DukeException("\u2639 OOPS!!! The description of a todo cannot be empty.");
+                    switch (words[0]) {
+                        case "done":
+                        case "Done": {
+                            if (words.length == 1) {
+                                throw new DukeException("\u2639 OOPS!!! You did not specify a task number to mark as done.");
+                            }
+                            int check = Integer.parseInt(words[1]) - 1;
+                            taskComplete(check);
+                            break;
                         }
-                        Task task = new Todo(words[1]);
-                        storeTask(task);
-                    } else if (words[0].equals("deadline")) {
-                        if (words.length == 1) {
-                            throw new DukeException("\u2639 OOPS!!! The description of a deadline cannot be empty.");
+                        case "remove":
+                        case "Remove": {
+                            int check = Integer.parseInt(words[1]) - 1;
+                            removeTask(check);
+                            break;
                         }
-                        String[] splitter = words[1].split("/by");
-                        Task task = new Deadline(splitter[0].trim(), splitter[1].trim());
-                        storeTask(task);
-                    } else if (words[0].equals("event")) {
-                        if (words.length == 1) {
-                            throw new DukeException("\u2639 OOPS!!! The description of a deadline cannot be empty.");
+                        case "todo": {
+                            if (words.length == 1) {
+                                throw new DukeException("\u2639 OOPS!!! The description of a todo cannot be empty.");
+                            }
+                            Task task = new Todo(words[1]);
+                            storeTask(task);
+                            break;
                         }
-                        String[] splitter = words[1].split("/at");
-                        Task task = new Event(splitter[0].trim(), splitter[1].trim());
-                        storeTask(task);
-                    } else {
-                        throw new DukeException("\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(");
+                        case "deadline": {
+                            if (words.length == 1) {
+                                throw new DukeException("\u2639 OOPS!!! The description of a deadline cannot be empty.");
+                            }
+                            String[] splitter = words[1].split("/by");
+                            Task task = new Deadline(splitter[0].trim(), splitter[1].trim());
+                            storeTask(task);
+                            break;
+                        }
+                        case "event": {
+                            if (words.length == 1) {
+                                throw new DukeException("\u2639 OOPS!!! The description of an event cannot be empty.");
+                            }
+                            String[] splitter = words[1].split("/at");
+                            Task task = new Event(splitter[0].trim(), splitter[1].trim());
+                            storeTask(task);
+                            break;
+                        }
+                        default:
+                            throw new DukeException("\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(");
                     }
                 }
             } catch (DukeException e) {
