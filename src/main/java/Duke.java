@@ -1,5 +1,8 @@
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Duke {
@@ -16,7 +19,7 @@ public class Duke {
 
     private static void storeTask(Task a) {
         list.add(a);
-        writeFile(FILENAME);
+        writeFile();
         if (list.size() == 1) {
             System.out.println("Got it. I've added this task:\n"
                     + "   " + a.toString()
@@ -37,7 +40,7 @@ public class Duke {
 
     private static void taskComplete(int i) {
         list.get(i).markAsDone();
-        writeFile(FILENAME);
+        writeFile();
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(list.get(i).toString());
     }
@@ -46,12 +49,26 @@ public class Duke {
         System.out.println("Okay! I've removed this task:");
         System.out.println(list.get(i).toString());
         list.remove(i);
-        writeFile(FILENAME);
+        writeFile();
     }
 
-    private static void writeFile(String name) {
+    private static String convertDateTime(String dateTime) throws ParseException {
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("d/MM/yyyy HHmm");
+        Date date = simpleDateFormat1.parse(dateTime);
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("EEE dd MMMM yyyy hh:mm a");
+        return simpleDateFormat2.format(date);
+    }
+
+    private static String convertDateOnly(String dateOnly) throws ParseException {
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("d/MM/yyyy");
+        Date date = simpleDateFormat1.parse(dateOnly);
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("EEE dd MMMM yyyy");
+        return simpleDateFormat2.format(date);
+    }
+
+    private static void writeFile() {
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(name));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Duke.FILENAME));
             for (int i = 0; i < list.size(); i++) {
                 bufferedWriter.write(list.get(i) + "\n");
             }
@@ -62,9 +79,9 @@ public class Duke {
         }
     }
 
-    private static void readFile(String name) {
+    private static void readFile() {
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(name));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(Duke.FILENAME));
             String input = bufferedReader.readLine();
             int count = 0;
             String status;
@@ -114,7 +131,7 @@ public class Duke {
         greet();
         Scanner obj = new Scanner(System.in);
         String input;
-        readFile(FILENAME);
+        readFile();
         while (true) {
             try {
                 input = obj.nextLine();
@@ -133,13 +150,13 @@ public class Duke {
                             if (words.length == 1) {
                                 throw new DukeException("\u2639 OOPS!!! You did not specify a task number to mark as done.");
                             }
-                            int check = Integer.parseInt(words[1]) - 1;
+                            int check = Integer.parseInt(words[1].trim()) - 1;
                             taskComplete(check);
                             break;
                         }
                         case "remove":
                         case "Remove": {
-                            int check = Integer.parseInt(words[1]) - 1;
+                            int check = Integer.parseInt(words[1].trim()) - 1;
                             removeTask(check);
                             break;
                         }
@@ -156,8 +173,14 @@ public class Duke {
                                 throw new DukeException("\u2639 OOPS!!! The description of a deadline cannot be empty.");
                             }
                             String[] splitter = words[1].split("/by");
-                            Task task = new Deadline(splitter[0].trim(), splitter[1].trim());
-                            storeTask(task);
+                            String[] dateTime = splitter[1].trim().split(" ");
+                            if (dateTime.length > 1) {
+                                Task task = new Deadline(splitter[0].trim(), convertDateTime(splitter[1].trim()));
+                                storeTask(task);
+                            } else {
+                                Task task = new Deadline(splitter[0].trim(), convertDateOnly(splitter[1].trim()));
+                                storeTask(task);
+                            }
                             break;
                         }
                         case "event": {
@@ -165,8 +188,14 @@ public class Duke {
                                 throw new DukeException("\u2639 OOPS!!! The description of an event cannot be empty.");
                             }
                             String[] splitter = words[1].split("/at");
-                            Task task = new Event(splitter[0].trim(), splitter[1].trim());
-                            storeTask(task);
+                            String[] dateTime = splitter[1].trim().split(" ");
+                            if (dateTime.length > 1) {
+                                Task task = new Event(splitter[0].trim(), convertDateTime(splitter[1].trim()));
+                                storeTask(task);
+                            } else {
+                                Task task = new Event(splitter[0].trim(), convertDateOnly(splitter[1].trim()));
+                                storeTask(task);
+                            }
                             break;
                         }
                         default:
@@ -174,8 +203,11 @@ public class Duke {
                     }
                 }
             } catch (DukeException e) {
-                    System.out.println(e.getMessage());
-                    System.out.println("Please enter a task.");
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a task.");
+            } catch (ParseException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter date in the correct format dd/mm/yyyy and 24H time convention if needed");
             }
         }
     }
