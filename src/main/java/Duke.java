@@ -45,11 +45,23 @@ public class Duke {
         System.out.println(list.get(i).toString());
     }
 
-    private static void removeTask(int i) {
-        System.out.println("Okay! I've removed this task:");
-        System.out.println(list.get(i).toString());
+    private static void deleteTask(int i) throws NumberFormatException {
+        System.out.println("Noted. I've removed this task:");
+        System.out.println("   " + list.get(i).toString());
         list.remove(i);
+        System.out.println("Now you have " + list.size() + " tasks in the list");
         writeFile();
+    }
+
+    private static void findTask(String match) {
+        System.out.println("Here are the matching tasks in your lists:");
+        int count = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).description.contains(match)) {
+                System.out.println(count+1 + "." + list.get(i).toString());
+                count++;
+            }
+        }
     }
 
     private static String convertDateTime(String dateTime) throws ParseException {
@@ -154,17 +166,25 @@ public class Duke {
                             taskComplete(check);
                             break;
                         }
-                        case "remove":
-                        case "Remove": {
+                        case "delete":
+                        case "Delete": {
                             int check = Integer.parseInt(words[1].trim()) - 1;
-                            removeTask(check);
+                            deleteTask(check);
+                            break;
+                        }
+                        case "find":
+                        case "Find": {
+                            if (words.length == 1) {
+                                throw new DukeException("\u2639 OOPS!!! You did not specify a keyword.");
+                            }
+                            findTask(words[1].trim());
                             break;
                         }
                         case "todo": {
                             if (words.length == 1) {
                                 throw new DukeException("\u2639 OOPS!!! The description of a todo cannot be empty.");
                             }
-                            Task task = new Todo(words[1]);
+                            Task task = new Todo(words[1].trim());
                             storeTask(task);
                             break;
                         }
@@ -208,6 +228,11 @@ public class Duke {
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Please enter date in the correct format dd/mm/yyyy and 24H time convention if needed");
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please specify a task number to delete");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
