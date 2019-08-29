@@ -149,7 +149,7 @@ public class Duke {
                         case "done":
                         case "Done": {
                             if (words.length == 1) {
-                                throw new DukeException("\u2639 OOPS!!! You did not specify a task number to mark as done.");
+                                throw new DukeException("\u2639 OOPS!!! You did not specify a task to mark as done.");
                             }
                             int check = Integer.parseInt(words[1].trim()) - 1;
                             taskComplete(check);
