@@ -53,6 +53,17 @@ public class Duke {
         writeFile();
     }
 
+    private static void findTask(String match) {
+        System.out.println("Here are the matching tasks in your lists:");
+        int count = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).description.contains(match)) {
+                System.out.println(count+1 + "." + list.get(i).toString());
+                count++;
+            }
+        }
+    }
+
     private static String convertDateTime(String dateTime) throws ParseException {
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("d/MM/yyyy HHmm");
         Date date = simpleDateFormat1.parse(dateTime);
@@ -158,17 +169,29 @@ public class Duke {
                         case "delete":
                         case "Delete": {
                             int check = Integer.parseInt(words[1].trim()) - 1;
+<<<<<<< HEAD
                             if (check >= list.size()) {
                                 throw new ArrayIndexOutOfBoundsException("\u2639 OOPS!!! That task number does not exist.");
                             }
                             deleteTask(check);
+=======
+                            deleteTask(check);
+                            break;
+                        }
+                        case "find":
+                        case "Find": {
+                            if (words.length == 1) {
+                                throw new DukeException("\u2639 OOPS!!! You did not specify a keyword.");
+                            }
+                            findTask(words[1].trim());
+>>>>>>> branch-Level-9
                             break;
                         }
                         case "todo": {
                             if (words.length == 1) {
                                 throw new DukeException("\u2639 OOPS!!! The description of a todo cannot be empty.");
                             }
-                            Task task = new Todo(words[1]);
+                            Task task = new Todo(words[1].trim());
                             storeTask(task);
                             break;
                         }
