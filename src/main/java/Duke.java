@@ -45,10 +45,11 @@ public class Duke {
         System.out.println(list.get(i).toString());
     }
 
-    private static void removeTask(int i) {
-        System.out.println("Okay! I've removed this task:");
-        System.out.println(list.get(i).toString());
+    private static void deleteTask(int i) throws NumberFormatException {
+        System.out.println("Noted. I've removed this task:");
+        System.out.println("   " + list.get(i).toString());
         list.remove(i);
+        System.out.println("Now you have " + list.size() + " tasks in the list");
         writeFile();
     }
 
@@ -154,10 +155,13 @@ public class Duke {
                             taskComplete(check);
                             break;
                         }
-                        case "remove":
-                        case "Remove": {
+                        case "delete":
+                        case "Delete": {
                             int check = Integer.parseInt(words[1].trim()) - 1;
-                            removeTask(check);
+                            if (check >= list.size()) {
+                                throw new ArrayIndexOutOfBoundsException("\u2639 OOPS!!! That task number does not exist.");
+                            }
+                            deleteTask(check);
                             break;
                         }
                         case "todo": {
@@ -208,6 +212,11 @@ public class Duke {
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Please enter date in the correct format dd/mm/yyyy and 24H time convention if needed");
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please specify a task number to delete");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
