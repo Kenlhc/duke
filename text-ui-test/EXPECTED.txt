@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 Here are the tasks in your list:
 1.[T][✘] start ST2334 cheatsheet
 2.[D][✘] CS2105 assignment (by: Sat 07 September 2019)
 3.[D][✘] CS2113T Duke levels 6 and 9 (by: Tue 03 September 2019 11:59 PM)
+=======
+Here are the tasks in your list:
+1.[T][✘] start ST2334 cheatsheet
+2.[D][✘] CS2105 assignment (by: Sat 07 September 2019)
+3.[D][✘] CS2113T Duke levels 6 and 9 (by: Tue 03 September 2019 11:59 PM)
+>>>>>>> origin/master
 4.[D][✘] CS2105 tutorial (by: Fri 06 September 2019)
