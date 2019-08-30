@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Duke {
+    public Duke () {
+
+    }
     private static ArrayList<Task> list = new ArrayList<>();
     private static final String FILENAME = "C:\\Users\\user\\Desktop\\duke\\data\\tasks.txt";
 
@@ -169,12 +172,9 @@ public class Duke {
                         case "delete":
                         case "Delete": {
                             int check = Integer.parseInt(words[1].trim()) - 1;
-<<<<<<< HEAD
                             if (check >= list.size()) {
                                 throw new ArrayIndexOutOfBoundsException("\u2639 OOPS!!! That task number does not exist.");
                             }
-                            deleteTask(check);
-=======
                             deleteTask(check);
                             break;
                         }
@@ -184,7 +184,6 @@ public class Duke {
                                 throw new DukeException("\u2639 OOPS!!! You did not specify a keyword.");
                             }
                             findTask(words[1].trim());
->>>>>>> branch-Level-9
                             break;
                         }
                         case "todo": {
