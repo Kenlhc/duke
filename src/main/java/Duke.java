@@ -25,12 +25,10 @@ public class Duke {
         writeFile();
         if (list.size() == 1) {
             System.out.println("Got it. I've added this task:\n"
-                    + "   " + a.toString()
-                    + "\nNow you have " + list.size() + " task in the list");
+                    + "   " + a.toString() + "\nNow you have " + list.size() + " task in the list");
         } else {
             System.out.println("Got it. I've added this task:\n"
-                    + "   " + a.toString()
-                    + "\nNow you have " + list.size() + " tasks in the list");
+                    + "   " + a.toString() + "\nNow you have " + list.size() + " tasks in the list");
         }
     }
 
