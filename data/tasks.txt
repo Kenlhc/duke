@@ -1,4 +1,5 @@
-[T][✘] start ST2334 cheatsheet
-[D][✘] CS2105 assignment (by: Sat 07 September 2019)
-[D][✘] CS2113T Duke levels 6 and 9 (by: Tue 03 September 2019 11:59 PM)
-[D][✘] CS2105 tutorial (by: Fri 06 September 2019)
+[D][✘] CS2105 tutorial (by: Fri 06 September 2019 01:00 PM)
+[T][✘] ST2334 cheatsheet
+[D][✘] read up for CS2113T tutorial (by: Wed 04 September 2019 05:00 PM)
+[D][✘] ST2334 tutorial (by: Mon 09 September 2019 11:00 AM)
+[E][✓] nothing (at: Wed 04 September 2019 11:59 PM)
