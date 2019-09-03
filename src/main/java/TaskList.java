@@ -30,16 +30,14 @@ public class TaskList {
     }
 
     public static void delete(int i) throws NumberFormatException {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("   " + list.get(i).toString());
+        System.out.println("Noted. I've removed this task:\n" + "   " + list.get(i).toString() );
         list.remove(i);
         System.out.println("Now you have " + list.size() + " tasks in the list");
     }
 
     public static void complete(int i) {
         list.get(i).markAsDone();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(list.get(i).toString());
+        System.out.println("Nice! I've marked this task as done:\n" + "  " + list.get(i).toString());
     }
 
     public static void find(String match) {
@@ -53,7 +51,7 @@ public class TaskList {
         }
     }
 
-    public static void echo() {
+    public static void listTask() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < list.size(); i++) {
             System.out.println(i+1 + "." + list.get(i).toString());

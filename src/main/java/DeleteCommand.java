@@ -4,10 +4,10 @@ public class DeleteCommand extends Command {
         this.input = input;
     }
 
-    public void execute(TaskList list, Ui ui, Storage storage) {
+    public void execute(TaskList list, Ui ui, Storage storage) throws DukeException {
         String[] words = input.split(" ", 2);
         if (words.length == 1) {
-            throw new ArrayIndexOutOfBoundsException("\u2639 OOPS!!! That task number does not exist.");
+            throw new DukeException ("\u2639 OOPS!!! You did not specify a task number to delete.");
         } else {
             int check = Integer.parseInt(words[1].trim()) - 1;
             list.delete(check);

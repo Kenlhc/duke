@@ -34,12 +34,13 @@ public class Duke {
                 System.out.println("Please enter a task.");
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
-                System.out.println("Please enter date in the correct format dd/mm/yyyy with 24H time convention");
+                System.out.println("Please enter date in the correct format dd/mm/yyyy hhmm");
             } catch (NumberFormatException e) {
                 System.out.println(e.getMessage());
-                System.out.println("Please specify a task number to delete");
-            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Please specify a task number to delete.");
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
+                System.out.println("The task number you entered does not exist.");
             }
         }
     }

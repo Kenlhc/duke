@@ -4,7 +4,7 @@ public class ListCommand extends Command {
     }
 
     public void execute(TaskList list, Ui ui, Storage storage) {
-        list.echo();
+        list.listTask();
     }
 
     public boolean isExit() {

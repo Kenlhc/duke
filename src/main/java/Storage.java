@@ -10,7 +10,7 @@ public class Storage {
 
     public static void writeFile(TaskList list) {
         try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("C:\\Users\\user\\Desktop\\duke\\data\\tasks.txt"));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename));
             for (int i = 0; i < list.getSize(); i++) {
                 bufferedWriter.write(list.getTaskList(i) + "\n");
             }
@@ -62,6 +62,8 @@ public class Storage {
                 input = bufferedReader.readLine();
             }
             bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             System.out.println("There's no file");
             e.printStackTrace();
