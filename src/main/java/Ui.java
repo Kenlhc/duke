@@ -1,8 +1,10 @@
+import javax.lang.model.type.NullType;
 import java.util.Scanner;
 
 public class Ui {
+    Scanner obj = new Scanner(System.in);
+
     public String readInput() {
-        Scanner obj = new Scanner(System.in);
         return obj.nextLine();
     }
 

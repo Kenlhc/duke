@@ -1,3 +1,13 @@
 Hello! I'm Duke
 What can I do for you?
+Here are the tasks in your list:
+1.[D][✘] ] ST2334 tutorial (by: Mon 09 September 2019 11:00 AM)
+2.[T][✘] ST2334 start cheatsheet
+Got it. I've added this task:
+   [T][✘] test
+Now you have 3 tasks in the list
+Here are the tasks in your list:
+1.[D][✘] ] ST2334 tutorial (by: Mon 09 September 2019 11:00 AM)
+2.[T][✘] ST2334 start cheatsheet
+3.[T][✘] test
 Bye. Hope to see you again soon!
