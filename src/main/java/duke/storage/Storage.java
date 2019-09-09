@@ -9,13 +9,29 @@ import duke.tasks.Todo;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * This Storage program implements methods to store and read
+ * Tasks that have been specified by the user
+ */
 public class Storage {
+    /**
+     * The name of the file to save the tasks to as well as read from
+     */
     private static String filename;
 
+    /**
+     * This method references the filename from the String in the main application
+     * @param filename The name of the file to store and read from
+     */
     public Storage(String filename) {
         this.filename = filename;
     }
 
+    /**
+     * This method stores the tasks specified by the user into a file saved
+     * on the hard drive
+     * @param list The tasks that has been specified by the user
+     */
     public static void writeFile(TaskList list) {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename));
@@ -29,6 +45,12 @@ public class Storage {
         }
     }
 
+    /**
+     * This method reads the tasks specified by the user from a file saved
+     * on the hard drive
+     * @return Task containing the full list of tasks specified
+     * @throws FileNotFoundException Catches missing files that are to be read from
+     */
     public ArrayList<Task> readFile() throws FileNotFoundException {
         ArrayList<Task> list = new ArrayList<>();
         try {

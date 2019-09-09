@@ -8,12 +8,21 @@ import duke.ui.Ui;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 
+/**
+ * This is a Personal Task Manager called Duke that can aid
+ * in storing your tasks as a todo, deadline or event with
+ * status icons to signify completion.
+ */
 public class Duke {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
     private Parser parser;
 
+    /**
+     * This method initialises the variables required
+     * @param filename The name of the file to be read from
+     */
     public Duke (String filename) {
         ui = new Ui();
         storage = new Storage(filename);
@@ -26,6 +35,11 @@ public class Duke {
         }
     }
 
+    /**
+     * This method runs the entire program by taking in user input
+     * and understanding them as commands to either add, delete, find, list
+     * or mark as done before exiting when the user types bye
+     */
     public void run() {
         ui.greet();
         boolean isExit = false;
@@ -51,7 +65,10 @@ public class Duke {
         }
     }
 
-
+    /**
+     * This is the main method of the program
+     * @param args The main argument of the program
+     */
     public static void main(String[] args) {
         new Duke("C:\\Users\\user\\Desktop\\duke\\data\\tasks.txt").run();
     }

@@ -3,8 +3,18 @@ package duke.parser;
 import duke.commands.*;
 import duke.exception.DukeException;
 
+/**
+ * This Parser program implements an application that
+ * reads a user's command and understands it to perform different tasks
+ */
 public class Parser {
-
+    /**
+     * This method is used to understand the command given by the user
+     * and carry out the tasks specified.
+     * @param input This is the command given by the user
+     * @return Command based on user input
+     * @throws DukeException Catches commands given by the user which is not understood
+     */
     public static Command parse(String input) throws DukeException {
         String[] words = input.split(" ", 2);
         if (input.equals("bye")) {
