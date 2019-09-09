@@ -1,2 +1,4 @@
-[D][✘] ST2334 tutorial (by: Mon 09 September 2019 11:00 AM)
-[T][✘] ST2334 start cheatsheet
+[D][✓] ST2334 tutorial (by: Mon 09 September 2019 11:00 AM)
+[D][✘] Duke (by: Tue 10 September 2019 11:59 PM)
+[T][✘] CS2105 tutorial
+[T][✘] ST2334 tutorial

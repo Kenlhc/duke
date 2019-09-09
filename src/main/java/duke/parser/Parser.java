@@ -1,6 +1,11 @@
+package duke.parser;
+
+import duke.commands.*;
+import duke.exception.DukeException;
+
 public class Parser {
 
-    public Command parse(String input) throws DukeException {
+    public static Command parse(String input) throws DukeException {
         String[] words = input.split(" ", 2);
         if (input.equals("bye")) {
             return new ExitCommand();

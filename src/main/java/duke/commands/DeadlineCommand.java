@@ -1,3 +1,13 @@
+package duke.commands;
+
+import duke.converter.Converter;
+import duke.exception.DukeException;
+import duke.storage.Storage;
+import duke.tasklist.TaskList;
+import duke.tasks.Deadline;
+import duke.tasks.Task;
+import duke.ui.Ui;
+
 import java.text.ParseException;
 
 public class DeadlineCommand extends Command {

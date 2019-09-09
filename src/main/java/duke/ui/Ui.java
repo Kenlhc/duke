@@ -1,4 +1,5 @@
-import javax.lang.model.type.NullType;
+package duke.ui;
+
 import java.util.Scanner;
 
 public class Ui {
